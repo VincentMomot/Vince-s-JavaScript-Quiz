@@ -23,12 +23,20 @@ var questions = [
                 "Open your ears", "if(button is clicked){...}"],
         answer: ".addEventListener('click',btn)"
     }];
+    
+var save=0;
+save= localStorage.getItem("save")
 
+
+if (save!=1){
+    console.log("WHY?")
 var highScores=[{name: "vince", score:"29"},
                 {name: "darrly", score:"15"},
-                {name: "smitty", score:"1"},];
-localhigh=JSON.stringify(highScores);
-localStorage.setItem("localhigh",localhigh);
+                {name: "smitty", score:"1"}];
+                localhigh=JSON.stringify(highScores);
+                localStorage.setItem("localhigh",localhigh);        
+}
+    
 
 var scoresEL = document.querySelector("#scores")                
 var timeEL = document.querySelector("#countdown");
@@ -45,7 +53,8 @@ var highEL=document.querySelector("#high");
 startEL.addEventListener("click", setTime);
 startEL.addEventListener("click", quiz);
 highEL.addEventListener("click", fHighScore);
-ansbankEL.addEventListener("click", answerq);
+saveEL= document.querySelector("#save");
+saveEL.style.visibility=("hidden");
 var timeLeft = 30;   
 var done=0; //used when quiz timer runs out or 4 questions are answered
 var menutoggle=0; //is 0 when ready to start the quiz
@@ -64,6 +73,8 @@ reset()
 }
    //the quiz
 else if(menutoggle==0 && htoggle==1){
+    ansbankEL.addEventListener("click", answerq);
+
             mainEL.style.visibility='visible';
             ansbankEL.style.visibility='visible';  
             q1EL.style.visibility='visible';
@@ -104,7 +115,8 @@ console.log(questions[0].choices[2]);
             mainEL.style.visibility='visible';
             menutoggle = 1;
             htoggle=0;
-            clearInterval(timerInterval);}
+            clearInterval(timerInterval);
+            ansbankEL.removeEventListener("click", answerq)}
 
           //end if time expires
         else if(timeLeft==0 || timeLeft<0){
@@ -121,6 +133,7 @@ console.log(questions[0].choices[2]);
           highEL.textContent="See High Scores";
           menutoggle = 1;
           htoggle=0;
+          ansbankEL.removeEventListener("click", answerq)
               }
         else{
             timeEL.style.visibility='visible';
@@ -136,6 +149,8 @@ console.log(questions[0].choices[2]);
         q1EL.style.visibility="visible";
             q2EL.style.visibility="visible";
             q3EL.style.visibility="visible";
+            saveEL.style.visibility=("hidden");
+
             view=JSON.parse(localStorage.getItem("localhigh"));
             
         q1EL.textContent= view[0].name + "  " + view[0].score;
@@ -146,6 +161,7 @@ console.log(questions[0].choices[2]);
         startEL.textContent="Main Menu";
         htoggle=0;
         menutoggle=1;   
+
     }
     //resets the text to home page
     function reset(){
@@ -167,6 +183,7 @@ console.log(questions[0].choices[2]);
             htoggle=1;
             timegoing=0;
             i=0;
+            saveEL.style.visibility=("hidden");
     }   
 
 
@@ -176,8 +193,10 @@ console.log(questions[0].choices[2]);
     
 
     function answerq(event){
+        if(i<4){
         anscheck=(questions[i].answer);
         console.log(event.target.textContent);  
+        }
     if(event.target.textContent==anscheck){
         console.log("vince");
     }
@@ -191,19 +210,32 @@ console.log(questions[0].choices[2]);
     var high3=view[2].score;
     var name2=view[1].name;  //second place name
     if(timeLeft>high2){
-        high3=high2;
+        saveEL.style.visibility=("visible");
+        view[2].score=high2;
+        
+        q1EL.style.visibility="visible";
+        q2EL.style.visibility="visible";
+        q1EL.textContent="You got on the Leader Board"
         view[2].name=name2; //makes the name go down a spot when beaten along with the score
         view[1].score=timeLeft;
         view[1].name="VINENY THE WINNER"  ////change this to take in a name
         localhigh=JSON.stringify(view);
+        save=1;
+        localStorage.setItem("save",save);
         localStorage.setItem("localhigh",localhigh)
 
         console.log("second place");
     }
     else if(timeLeft>high3){
+        saveEL.style.visibility=("visible");
         console.log("3rdplace");
+        q1EL.style.visibility="visible";
+        q2EL.style.visibility="visible";
+        q1EL.textContent="You got on the Leader Board"
         view[2].name="TEST" ///change this to take in a name
         view[2].score=timeLeft;
+        save=1;
+        localStorage.setItem("save",save);
         localhigh=JSON.stringify(view);
         localStorage.setItem("localhigh",localhigh)
 

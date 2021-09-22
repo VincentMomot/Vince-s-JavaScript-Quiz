@@ -20,7 +20,5 @@ This Quiz will test your basic fundamentals of javascript
 
 Try your hand at the Quiz at [Vincent D Momot's JS Quiz](https://vincentmomot.github.io/Vince-s-JavaScript-Quiz/index)
 
-Click [vincentmomot.github.io/Vincent-D-Momot-s-Portfolio](https://vincentmomot.github.io/Vincent-D-Momot-s-Portfolio/index) to see my other projects! 
-
 Screenshots of the site:
 ![This is an image of my main page](assets/quiz.png)
