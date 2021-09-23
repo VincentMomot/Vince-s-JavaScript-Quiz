@@ -1,5 +1,4 @@
-//JavaScript Questions
-// 1 
+//list of 4 questions
 var questions = [
     {
         title: "Commonly used data types DO NOT include:",
@@ -24,10 +23,11 @@ var questions = [
         answer: ".addEventListener('click',btn)"
     }];
 
+//checks if storage has been overwritten yet to local storage
 var save = 0;
 save = localStorage.getItem("save")
 
-
+//if storage is not overwritten, use default hisgh score board
 if (save != 1) {
     var highScores = [{ name: "vince", score: "29" },
     { name: "darrly", score: "15" },
@@ -36,7 +36,7 @@ if (save != 1) {
     localStorage.setItem("localhigh", localhigh);
 }
 
-
+//defines variables and elements in JS
 var scoresEL = document.querySelector("#scores")
 var timeEL = document.querySelector("#countdown");
 var startEL = document.querySelector("#start");
@@ -48,13 +48,6 @@ var q4EL = document.querySelector("#q4");
 var usernameEL = document.querySelector("#username");
 usernameEL.style.display = "block";
 startEL.addEventListener("click", grabUserName)
-
-function grabUserName() {
-    var usernameEL = document.querySelector("#username");
-    var highname = usernameEL.value
-    return highname;
-}
-
 var questionEL = document.querySelector("#question");
 var ansbankEL = document.querySelector("#ansbank");
 var highEL = document.querySelector("#high");
@@ -69,11 +62,17 @@ var complete = 0; //used when needed to recieve a high score
 var timegoing = 0;
 var i = 0;
 var view;
+var questionNum = 0;
 
-//quiz changes
+//stores the username in case the user gets a high score
+function grabUserName() {
+    var usernameEL = document.querySelector("#username");
+    var highname = usernameEL.value
+    return highname;
+}
 
 function quiz() {
-    //the main menu
+    //the main menu 
     if (menutoggle == 1) {
         reset()
     }
@@ -81,13 +80,13 @@ function quiz() {
     else if (menutoggle == 0 && htoggle == 1) {
         ansbankEL.addEventListener("click", answerq);
 
+        //displays the questions and hides the buttons
         mainEL.style.visibility = 'visible';
         ansbankEL.style.visibility = 'visible';
         q1EL.style.visibility = 'visible';
         q2EL.style.visibility = 'visible';
         q3EL.style.visibility = 'visible';
         q4EL.style.visibility = 'visible';
-
         questionEL.textContent = questions[i].title;
         q1EL.textContent = questions[i].choices[0];
         q2EL.textContent = questions[i].choices[1];
@@ -111,6 +110,7 @@ function setTime() {
                 timeEL.style.visibility = 'hidden';
                 questionEL.textContent = "Your Score is: " + timeLeft;
                 q1EL.style.visibility = "hidden";
+                //in order to display the q1EL if a high score is attained
                 if (timeLeft > view[2].score) {
                     usernameEL.style.display = "none";
                     q1EL.style.visibility = "visible";
@@ -122,13 +122,12 @@ function setTime() {
                 highEL.style.visibility = 'visible';
                 startEL.textContent = "Main Menu";
                 highEL.textContent = "See High Scores";
-
                 ansbankEL.style.visibility = 'visible';
                 mainEL.style.visibility = 'visible';
                 menutoggle = 1;
                 htoggle = 0;
-                clearInterval(timerInterval);
-                ansbankEL.removeEventListener("click", answerq)
+                clearInterval(timerInterval); 
+                ansbankEL.removeEventListener("click", answerq) //so that ordianry text is not clickable
             }
 
             //end if time expires
@@ -149,6 +148,7 @@ function setTime() {
                 htoggle = 0;
                 ansbankEL.removeEventListener("click", answerq)
             }
+            //if the quiz is not done
             else {
                 timeEL.style.visibility = 'visible';
                 usernameEL.style.display = "none";
@@ -166,7 +166,6 @@ function fHighScore() {
     q2EL.style.visibility = "visible";
     q3EL.style.visibility = "visible";
     view = JSON.parse(localStorage.getItem("localhigh"));
-
     q1EL.textContent = view[0].name + "  " + view[0].score;
     q2EL.textContent = view[1].name + "  " + view[1].score;
     q3EL.textContent = view[2].name + "  " + view[2].score;
@@ -193,23 +192,18 @@ function reset() {
     highEL.textContent = "See High Scores";
     startEL.textContent = "Start";
     usernameEL.style.display = "block";
-
     timeLeft = 30;
     done = 0;
     menutoggle = 0;
     htoggle = 1;
     timegoing = 0;
     i = 0;
-
 }
-
-
-
-var questionNum = 0;
 
 //upon quiz completion
 function answerq(event) {
     usernameEL.style.display = "none";
+    //if all questions aren't answered yet, check if the clicked item matches the answer
     if (i < 4) {
         anscheck = (questions[i].answer);
     }
@@ -220,20 +214,17 @@ function answerq(event) {
         timeLeft = timeLeft - 5;
         //wrong ANS
     }
-    i++;
-
+    i++; //move to next question
     if (i < 4) {
         quiz();
     }
-
+    //mark quiz as done, and work within the local storage to check if there is a new high score
     else {
         done = 1;
         view = JSON.parse(localStorage.getItem("localhigh"));
         var high2 = view[1].score; //new high score for 2nd place
         var high3 = view[2].score; //high score moves down
         var name2 = view[1].name;  //second place name
-
-
 
         //if taking the 2nd place spot
         if (timeLeft > high2) {
