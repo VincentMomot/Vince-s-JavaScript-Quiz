@@ -29,7 +29,6 @@ save= localStorage.getItem("save")
 
 
 if (save!=1){
-    console.log("WHY?")
 var highScores=[{name: "vince", score:"29"},
                 {name: "darrly", score:"15"},
                 {name: "smitty", score:"1"}];
@@ -91,7 +90,6 @@ else if(menutoggle==0 && htoggle==1){
     highEL.style.visibility = 'hidden';
    }}
 
-console.log(questions[0].choices[2]);
     //time functions
     function setTime() {
         //start timer only when starting the quiz, not when resetting
@@ -189,30 +187,36 @@ console.log(questions[0].choices[2]);
 
 
     var questionNum = 0;
-    console.log(questions[i].answer);
     
-
+    //upon quiz completion
     function answerq(event){
         if(i<4){
-        anscheck=(questions[i].answer);
-        console.log(event.target.textContent);  
+        anscheck=(questions[i].answer); 
         }
-    if(event.target.textContent==anscheck){
-        console.log("vince");
-    }
-    else{timeLeft=timeLeft-5;}      
-     i++
+            if(event.target.textContent==anscheck){
+              //correct ANS
+              }
+            else{timeLeft=timeLeft-5;
+            //wrong ANS
+            }  
+       i++;     
+       console.log(i);
     if(i<4){
-         quiz();}
+    quiz();}
+
     else{done=1;
         view=JSON.parse(localStorage.getItem("localhigh"));
-    var high2= view[1].score;
-    var high3=view[2].score;
+    var high2= view[1].score; //new high score for 2nd place
+    var high3=view[2].score; //high score moves down
     var name2=view[1].name;  //second place name
+
+    //if taking the 2nd place spot
     if(timeLeft>high2){
         saveEL.style.visibility=("visible");
         view[2].score=high2;
-        
+        //create textbox
+        var input=document.createElement("input");
+        input.type="text";
         q1EL.style.visibility="visible";
         q2EL.style.visibility="visible";
         q1EL.textContent="You got on the Leader Board"
@@ -226,6 +230,8 @@ console.log(questions[0].choices[2]);
 
         console.log("second place");
     }
+
+    //if taking the 3rd place spot
     else if(timeLeft>high3){
         saveEL.style.visibility=("visible");
         console.log("3rdplace");
