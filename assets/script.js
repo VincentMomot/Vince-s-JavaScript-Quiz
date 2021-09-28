@@ -24,11 +24,11 @@ var questions = [
     }];
 
 //checks if storage has been overwritten yet to local storage
-var save = 0;
-save = localStorage.getItem("save")
+var savevince123 = 0;
+savevince123 = localStorage.getItem("savevince123")
 
 //if storage is not overwritten, use default hisgh score board
-if (save != 1) {
+if (savevince123 != 1) {
     var highScores = [{ name: "vince", score: "29" },
     { name: "darrly", score: "15" },
     { name: "smitty", score: "1" }];
@@ -187,7 +187,7 @@ function reset() {
     q1EL.textContent = "Try your hand at this quiz and see how well you know the JavaScript fundamentals.";
     q2EL.textContent = "There are four multiple choice questions and a timer.";
     q3EL.textContent = "Wrong answers penalize 5 seconds, get the highest score possible!";
-    q4EL.textContent = "Add your username below to save your score.";
+    q4EL.textContent = "Add your username below to savevince123 your score.";
     highEL.style.visibility = "visible";
     highEL.textContent = "See High Scores";
     startEL.textContent = "Start";
@@ -235,8 +235,8 @@ function answerq(event) {
             view[1].score = timeLeft;
             view[1].name = grabUserName()
             localhigh = JSON.stringify(view);
-            save = 1;
-            localStorage.setItem("save", save);
+            savevince123 = 1;
+            localStorage.setItem("savevince123", savevince123);
             localStorage.setItem("localhigh", localhigh)
         }
 
@@ -247,8 +247,8 @@ function answerq(event) {
             view[2].score = timeLeft;
             view[2].name = grabUserName()
             localhigh = JSON.stringify(view);
-            save = 1;
-            localStorage.setItem("save", save);
+            savevince123 = 1;
+            localStorage.setItem("savevince123", savevince123);
             localStorage.setItem("localhigh", localhigh)
 
         }
